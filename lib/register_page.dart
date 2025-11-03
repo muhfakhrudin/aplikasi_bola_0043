@@ -36,21 +36,17 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(backgroundColor: Colors.white, elevation: 0), // <-- BARIS INI DIHAPUS
       backgroundColor: Colors.white,
       body: SafeArea(
-        // Ganti Center ke SingleChildScrollView agar tidak overflow saat keyboard muncul
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(30.0),
             child: Form(
-              // 1. Hubungkan _formKey ke Form
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.start, // Dihapus agar Center berfungsi
+
                 children: [
-                  // --- DIBUNGKUS CENTER ---
                   Center(
                     child: Text(
                       'Selamat Datang Fakhrudin',
@@ -62,11 +58,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   SizedBox(height: 15),
-                  // --- DIBUNGKUS CENTER & TAMBAH TEXTALIGN ---
+
                   Center(
                     child: Text(
                       'Silahkan daftar unutuk melanjutkan ke aplikasi Persibo Bola Mania',
-                      textAlign: TextAlign.center, // Tambahkan ini
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -76,8 +72,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   SizedBox(height: 30),
 
-                  // --- WIDGET FORM KEMBALI KE RATA KIRI ---
-                  // Kita buat Column baru agar form tetap rata kiri
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -86,7 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         keyboardType: TextInputType.text,
                         style: TextStyle(fontSize: 15),
                         decoration: InputDecoration(hintText: "Nama Lengkap"),
-                        // 2. Tambahkan validasi
+
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -101,7 +95,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         keyboardType: TextInputType.text,
                         style: TextStyle(fontSize: 15),
                         decoration: InputDecoration(hintText: "Alamat"),
-                        // 2. Tambahkan validasi
+
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -118,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
                         ],
-                        // 2. Perbaiki validasi
+
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -137,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.black,
-                          // Tambahkan bold agar konsisten
+
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -148,7 +142,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               title: const Text('Laki-laki'),
                               value: 'Laki-laki',
                               groupValue: _jenisKelamin,
-                              contentPadding: EdgeInsets.zero, // Rapatkan
+                              contentPadding: EdgeInsets.zero,
                               onChanged: (String? value) {
                                 setState(() {
                                   _jenisKelamin = value;
@@ -161,7 +155,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               title: const Text('Perempuan'),
                               value: 'Perempuan',
                               groupValue: _jenisKelamin,
-                              contentPadding: EdgeInsets.zero, // Rapatkan
+                              contentPadding: EdgeInsets.zero,
                               onChanged: (String? value) {
                                 setState(() {
                                   _jenisKelamin = value;
@@ -182,7 +176,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           if (value == null || !value.contains('@')) {
                             return 'Alamat email harus mengandung "@"';
                           }
-                          // Tambahkan cek domain
+
                           if (!value.endsWith('.com')) {
                             return 'Email harus valid (contoh: user@mail.com)';
                           }
@@ -254,20 +248,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     ],
                   ),
 
-                  // --- AKHIR DARI COLUMN RATA KIRI ---
                   const SizedBox(height: 30),
                   SizedBox(
-                    width: 500, // Lebar ini akan otomatis full
+                    width: 500,
                     height: 60,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.deepOrange,
                       ),
                       onPressed: () {
-                        // Validasi form
                         bool isValid = _formKey.currentState!.validate();
 
-                        // Validasi jenis kelamin dihapus
                         if (isValid) {
                           Navigator.pop(context);
                         }
