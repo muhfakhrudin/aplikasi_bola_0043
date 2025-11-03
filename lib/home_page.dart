@@ -10,13 +10,11 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-
       body: SafeArea(
         child: Column(
           children: [
             Container(
-              color:
-                  Colors.deepOrange, // Warna latar belakang yang Anda inginkan
+              color: Colors.deepOrange,
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,7 +54,6 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16.0),
@@ -71,7 +68,6 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(16.0),
@@ -125,7 +121,6 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-
                     const Text(
                       'Menu',
                       style: TextStyle(
@@ -154,33 +149,32 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 30),
-
                     const Text(
                       'Berita Terbaru Persebo',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 15),
-                    SizedBox(
-                      height: 200,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
+
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
                         children: [
                           _buildNewsCard(
-                            'Persebo Juara Liga',
-                            'Persebo berhasil menjuarai liga musim ini dengan performa yang konsisten sepanjang kompetisi.',
+                            'Persiapan Liga 3 Nusantara',
+                            'Persibo Bojonegoro sedang menyusun ulang program persiapan mereka. Ini dilakukan menjelang dimulainya Liga 3 Nusantara yang akan digelar pada 1 Desember 2025.',
                           ),
-                          const SizedBox(width: 16), // Jarak
+                          const SizedBox(width: 16),
                           _buildNewsCard(
-                            'Persebo Juara Liga',
-                            'Persebo berhasil menjuarai liga musim ini dengan performa yang konsisten sepanjang kompetisi.',
+                            'Persiapan Liga 3 Nusantara',
+                            'Persibo Bojonegoro sedang menyusun ulang program persiapan mereka. Ini dilakukan menjelang dimulainya Liga 3 Nusantara yang akan digelar pada 1 Desember 2025.',
                           ),
-                          const SizedBox(width: 16), // Jarak
+                          const SizedBox(width: 16),
                           _buildNewsCard(
-                            'Persebo Juara Liga',
-                            'Persebo berhasil menjuarai liga musim ini dengan performa yang konsisten sepanjang kompetisi.',
+                            'Persiapan Liga 3 Nusantara',
+                            'Persibo Bojonegoro sedang menyusun ulang program persiapan mereka. Ini dilakukan menjelang dimulainya Liga 3 Nusantara yang akan digelar pada 1 Desember 2025.',
                           ),
                         ],
                       ),
@@ -207,10 +201,10 @@ class HomePage extends StatelessWidget {
 
   Widget _buildNewsCard(String title, String description) {
     return Container(
-      width: 200,
+      width: 220,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.orange, // Sesuai kode Anda
+        color: Colors.orange,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(

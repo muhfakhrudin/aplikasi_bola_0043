@@ -1,6 +1,6 @@
 import 'package:aplikasi_bola/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart'; // <-- Pastikan ini di-import
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -45,11 +45,10 @@ class _RegisterPageState extends State<RegisterPage> {
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-
                 children: [
                   Center(
                     child: Text(
-                      'Selamat Datang Fakhrudin',
+                      'Selamat Datang Friends',
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -58,7 +57,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   SizedBox(height: 15),
-
                   Center(
                     child: Text(
                       'Silahkan daftar unutuk melanjutkan ke aplikasi Persibo Bola Mania',
@@ -71,16 +69,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   SizedBox(height: 30),
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextFormField(
                         controller: _namaCtr,
-                        keyboardType: TextInputType.text,
-                        style: TextStyle(fontSize: 15),
-                        decoration: InputDecoration(hintText: "Nama Lengkap"),
-
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -88,14 +81,17 @@ class _RegisterPageState extends State<RegisterPage> {
                           }
                           return null;
                         },
+                        decoration: InputDecoration(
+                          labelText: 'Nama',
+                          labelStyle: const TextStyle(fontSize: 16),
+                          floatingLabelStyle: const TextStyle(fontSize: 16),
+                          hintText: 'Masukkan nama anda',
+                          hintStyle: const TextStyle(fontSize: 14),
+                        ),
                       ),
                       SizedBox(height: 15),
                       TextFormField(
                         controller: _alamatCtr,
-                        keyboardType: TextInputType.text,
-                        style: TextStyle(fontSize: 15),
-                        decoration: InputDecoration(hintText: "Alamat"),
-
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -103,27 +99,38 @@ class _RegisterPageState extends State<RegisterPage> {
                           }
                           return null;
                         },
+                        decoration: InputDecoration(
+                          labelText: 'Alamat',
+                          labelStyle: const TextStyle(fontSize: 16),
+                          floatingLabelStyle: const TextStyle(fontSize: 16),
+                          hintText: 'Masukkan alamat anda ',
+                          hintStyle: const TextStyle(fontSize: 14),
+                        ),
                       ),
                       SizedBox(height: 15),
                       TextFormField(
                         controller: _noHpCtr,
                         keyboardType: TextInputType.number,
-                        style: TextStyle(fontSize: 15),
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
                         ],
-
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Nomor handphone tidak boleh kosong';
+                            return 'Nomor telepon tidak boleh kosong';
                           }
                           if (value.length < 10) {
-                            return 'Minimal 10 digit';
+                            return 'Nomor telepon minimal 10 digit';
                           }
                           return null;
                         },
-                        decoration: InputDecoration(hintText: "No. Handphone"),
+                        decoration: InputDecoration(
+                          labelText: 'No. Telepon',
+                          labelStyle: const TextStyle(fontSize: 16),
+                          floatingLabelStyle: const TextStyle(fontSize: 16),
+                          hintText: 'Masukan no. telepon anda',
+                          hintStyle: const TextStyle(fontSize: 14),
+                        ),
                       ),
                       SizedBox(height: 15),
                       const Text(
@@ -131,7 +138,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.black,
-
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -168,42 +174,79 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: 15),
                       TextFormField(
                         controller: _emailCtr,
-                        keyboardType: TextInputType.emailAddress,
-                        style: const TextStyle(fontSize: 15),
-                        decoration: const InputDecoration(hintText: "Email"),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                        keyboardType: TextInputType.emailAddress,
                         validator: (value) {
-                          if (value == null || !value.contains('@')) {
-                            return 'Alamat email harus mengandung "@"';
+                          if (value == null || value.isEmpty) {
+                            return 'Email tidak boleh kosong';
                           }
-
-                          if (!value.endsWith('.com')) {
-                            return 'Email harus valid (contoh: user@mail.com)';
+                          final emailRegex = RegExp(
+                            r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                          );
+                          if (!emailRegex.hasMatch(value)) {
+                            return 'Format email tidak valid';
+                          }
+                          // --- PERBAIKAN 1: Validasi @gmail.com ---
+                          if (!value.endsWith('@gmail.com')) {
+                            return 'Email harus berakhiran @gmail.com';
                           }
                           return null;
                         },
+                        decoration: const InputDecoration(
+                          labelText: 'Email',
+                          labelStyle: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
+                          floatingLabelStyle: TextStyle(
+                            fontSize: 16,
+
+                            fontWeight: FontWeight.w500,
+                          ),
+                          hintText: 'Masukkan email Anda',
+                          hintStyle: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14,
+                          ),
+                        ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 8),
                       TextFormField(
                         controller: _passwordCtr,
                         obscureText: _isObscure,
-                        style: const TextStyle(fontSize: 15),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Kata sandi tidak boleh kosong';
-                          } else if (value.length < 6) {
-                            return 'Minimal 6 karakter';
+                            return 'Password tidak boleh kosong';
+                          }
+                          if (value.length < 6) {
+                            return 'Password minimal 6 karakter';
                           }
                           return null;
                         },
+                        keyboardType: TextInputType.visiblePassword,
                         decoration: InputDecoration(
-                          hintText: "Password",
+                          labelText: 'Password',
+                          labelStyle: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
+                          floatingLabelStyle: const TextStyle(
+                            fontSize: 16,
+
+                            fontWeight: FontWeight.w500,
+                          ),
+                          hintText: 'Masukkan password Anda',
+                          hintStyle: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14,
+                          ),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _isObscure
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: Colors.grey,
                             ),
                             onPressed: () {
                               setState(() {
@@ -213,29 +256,44 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 8),
                       TextFormField(
                         controller: _konfmPasswordCtr,
                         obscureText: _isObscureKonfm,
-                        style: const TextStyle(fontSize: 15),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        // 2. Perbaiki validasi
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Konfirmasi kata sandi tidak boleh kosong';
+                            return 'Konfirmasi password tidak boleh kosong';
                           }
                           if (value != _passwordCtr.text) {
-                            return 'Konfirmasi kata sandi tidak sesuai';
+                            return 'Password tidak cocok';
                           }
                           return null;
                         },
+                        keyboardType: TextInputType.visiblePassword,
                         decoration: InputDecoration(
-                          hintText: "Konfirmasi Password",
+                          // --- PERBAIKAN 2: Fix typo ---
+                          labelText: 'Konfirmasi Password',
+                          labelStyle: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
+                          floatingLabelStyle: const TextStyle(
+                            fontSize: 16,
+
+                            fontWeight: FontWeight.w500,
+                          ),
+                          hintText: 'Konfirmasi password Anda',
+                          hintStyle: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14,
+                          ),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _isObscureKonfm
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: Colors.grey,
                             ),
                             onPressed: () {
                               setState(() {
@@ -247,7 +305,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 30),
                   SizedBox(
                     width: 500,

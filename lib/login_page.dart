@@ -20,7 +20,9 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Center(
+        // --- PERBAIKAN 1: Tambahkan SingleChildScrollView ---
+        child: SingleChildScrollView(
+          child: Center(
             child: Padding(
               padding: const EdgeInsets.all(30.0),
               child: Form(
@@ -30,12 +32,20 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Image.asset(
                       'images/Logo_Persibo.png',
-                      width: 300,
-                      height: 300,
+                      // --- PERBAIKAN 2: Kecilkan logo ---
+                      width: 150,
+                      height: 150,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(
+                          Icons.sports_soccer,
+                          size: 150,
+                          color: Colors.deepOrange,
+                        );
+                      },
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      "Selamat Datang Fakhrudin",
+                      "Selamat Datang Friends",
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -55,36 +65,68 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 30),
                     TextFormField(
                       controller: _emailCtr,
-                      keyboardType: TextInputType.emailAddress,
-                      style: const TextStyle(fontSize: 15),
-                      decoration: const InputDecoration(hintText: "Email"),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
+                      keyboardType: TextInputType.emailAddress,
                       validator: (value) {
-                        if (value == null || !value.contains('@')) {
-                          return 'Alamat email harus mengandung "@"';
+                        if (value == null || value.isEmpty) {
+                          return 'Email tidak boleh kosong';
                         }
+                        final emailRegex = RegExp(
+                          r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                        );
+                        if (!emailRegex.hasMatch(value)) {
+                          return 'Format email tidak valid';
+                        }
+                        // --- PERBAIKAN 3: Validasi @gmail.com ---
+                        if (!value.endsWith('@gmail.com')) {
+                          return 'Email harus berakhiran @gmail.com';
+                        }
+                        return null;
                       },
+                      decoration: const InputDecoration(
+                        labelText: 'Email',
+                        labelStyle: TextStyle(fontSize: 16, color: Colors.grey),
+                        floatingLabelStyle: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        hintText: 'Masukkan email Anda',
+                        hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
+                      ),
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
                       controller: _passwordCtr,
                       obscureText: _isObscure,
-                      style: const TextStyle(fontSize: 15),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Kata sandi tidak boleh kosong';
-                        } else if (value.length < 6) {
-                          return 'Minimal 6 karakter';
+                          return 'Password tidak boleh kosong';
                         }
+                        if (value.length < 6) {
+                          return 'Password minimal 6 karakter';
+                        }
+                        return null;
                       },
+                      keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
-                        hintText: "Password",
+                        labelText: 'Password',
+                        labelStyle: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey,
+                        ),
+                        floatingLabelStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        hintText: 'Masukkan Password Anda',
+                        hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
                         suffixIcon: IconButton(
                           icon: Icon(
                             _isObscure
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Colors.grey,
                           ),
                           onPressed: () {
                             setState(() {
@@ -160,6 +202,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
+      ),
     );
   }
 }
