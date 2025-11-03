@@ -1,5 +1,6 @@
 import 'package:aplikasi_bola/home.page.dart';
 import 'package:flutter/material.dart';
+import 'package:aplikasi_bola/register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -59,8 +60,8 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: const InputDecoration(hintText: "Email"),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Email tidak boleh kosong';
+                      if (value == null || !value.contains('@')) {
+                        return 'Alamat email harus mengandung "@"';
                       }
                     },
                   ),
@@ -119,6 +120,37 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Belum punya akun? ",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const RegisterPage(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          "Daftar",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.deepOrange,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
